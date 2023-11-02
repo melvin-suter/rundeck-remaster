@@ -18,7 +18,7 @@ jobs:
     - name: Get Version
       id: version
       run: |
-        IMAGE_VERSION=$(cat vcenter/version.txt)
+        IMAGE_VERSION=$(curl -s https://api.github.com/repos/rundeck/rundeck/releases/latest | grep 'tag_name' | awk -F ":" '{print $2}' | sed -E 's;"|,|\s|v;;g')
         echo "::set-output name=IMAGE_VERSION::${IMAGE_VERSION}"     
 
     - name: Login to Docker Hub
